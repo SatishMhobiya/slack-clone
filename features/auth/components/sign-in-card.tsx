@@ -15,10 +15,13 @@ interface SignInCardProps {
 const SignInCard = ({ setState }: SignInCardProps) => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState('');
+    const [pending, setPending] = useState<boolean>(false);
     const { signIn } = useAuthActions();
 
     const onProviderSignIn = (value: "github" | "google") => {
+        setPending(true);
         signIn(value)
+            .finally(() => setPending(false))
     }
 
     return (
@@ -45,7 +48,7 @@ const SignInCard = ({ setState }: SignInCardProps) => {
                             placeholder='Password'
                             required
                         />
-                        <Button className='w-full' size='lg' disabled={false} type='submit'>
+                        <Button className='w-full' size='lg' disabled={pending} type='submit'>
                             Continue
                         </Button>
                     </div>
@@ -56,8 +59,8 @@ const SignInCard = ({ setState }: SignInCardProps) => {
                     <Button
                         className='w-full relative'
                         size='lg'
-                        disabled={false}
-                        onClick={() => { }}
+                        disabled={pending}
+                        onClick={() => onProviderSignIn("google")}
                         variant='outline'
                     >
                         <FcGoogle className='size-5 absolute top-3 left-3' /> Continue with Google
@@ -65,7 +68,7 @@ const SignInCard = ({ setState }: SignInCardProps) => {
                     <Button
                         className='w-full relative'
                         size='lg'
-                        disabled={false}
+                        disabled={pending}
                         onClick={() => onProviderSignIn("github")}
                         variant='outline'
                     >
