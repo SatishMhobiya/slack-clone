@@ -7,6 +7,7 @@ import { FcGoogle } from 'react-icons/fc'
 import { SignInFlow } from '../types'
 import { useState } from 'react'
 import { useAuthActions } from '@convex-dev/auth/react'
+import { TriangleAlert } from 'lucide-react'
 
 interface SignInCardProps {
     setState: (state: SignInFlow) => void;
@@ -16,7 +17,18 @@ const SignInCard = ({ setState }: SignInCardProps) => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState('');
     const [pending, setPending] = useState<boolean>(false);
+    const [error, setError] = useState('')
     const { signIn } = useAuthActions();
+
+    const onPasswordSignIn = (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        setPending(true);
+        signIn("password", { email, password, flow: "signIn" }).catch(() => {
+            setError("Invalid email or password")
+        }).finally(() => {
+            setPending(false)
+        })
+    }
 
     const onProviderSignIn = (value: "github" | "google") => {
         setPending(true);
@@ -31,22 +43,30 @@ const SignInCard = ({ setState }: SignInCardProps) => {
                 <CardDescription>Use your email or another service to continue</CardDescription>
             </CardHeader>
             <CardContent className='space-y-5 px-0 pb-0'>
-                <form className='space-y-2.5'>
+                {!!error && <div className='bg-destructive/15 flex items-center p-3 rounded-md gap-x-2 text-sm text-destructive mb-3'>
+                    <TriangleAlert className='size-4' />
+                    <p>{error}</p>
+                </div>}
+                <form onSubmit={onPasswordSignIn} className='space-y-2.5'>
                     <div className='flex flex-col gap-2'>
                         <Input
+                            name='email'
                             type='email'
-                            disabled={false}
+                            disabled={pending}
                             required
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
                             placeholder='Email'
                         />
+                        <Input name="flow" type="hidden" value={'signIn'} />
                         <Input
+                            name='password'
                             type='password'
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
                             placeholder='Password'
                             required
+                            disabled={pending}
                         />
                         <Button className='w-full' size='lg' disabled={pending} type='submit'>
                             Continue
