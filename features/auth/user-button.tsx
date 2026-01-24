@@ -1,0 +1,47 @@
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
+import { Button } from '@/components/ui/button'
+import { DropdownMenu, DropdownMenuContent, DropdownMenuGroup, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu'
+import { useQuery } from 'convex/react'
+import { Loader, LogOutIcon } from 'lucide-react'
+import React from 'react'
+import { useCurrentUser } from './hooks/use-current-user'
+import { useAuthActions } from '@convex-dev/auth/react'
+// import { api } from '@/convex/_generated/api'
+
+const UserButton = () => {
+  const {signOut} = useAuthActions();
+
+    const { isLoading, data } = useCurrentUser();
+    if (isLoading) {
+        return <Loader className='size-4 animate-spin' />
+    }
+
+    if (!data) {
+        return null;
+    }
+
+    const { name, image } = data;
+    const avatarFallback = name!.charAt(0).toUpperCase();
+    return (
+        <DropdownMenu>
+            <DropdownMenuTrigger className='outline-none relative'>
+                <Avatar className='size-10 hover:opacity-75 transition'>
+                    <AvatarImage referrerPolicy='no-referrer' alt={name} src={image} />
+                    <AvatarFallback className='bg-sky-500 text-white '>
+                        {avatarFallback}
+                    </AvatarFallback>
+                </Avatar>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align='center' side='right' className='w-60'>
+                <DropdownMenuGroup>
+                    <DropdownMenuItem onClick={()=> signOut()}>
+                        <LogOutIcon />
+                        Log Out
+                    </DropdownMenuItem>
+                </DropdownMenuGroup>
+            </DropdownMenuContent>
+        </DropdownMenu>
+    )
+}
+
+export default UserButton
