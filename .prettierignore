@@ -1,0 +1,28 @@
+
+# Ignore artifacts:
+build
+coverage
+
+# Ignore Next.js specific directories and files:
+.next
+out
+
+# Ignore all HTML files in public (optional, adjust as needed):
+# public/**/*.html
+
+# Ignore dependencies:
+node_modules
+
+# Ignore configuration and lock files:
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+
+# Ignore environment variables files:
+.env
+.env*.local
+
+# Don't format images and icons
+public/**/*.svg
+public/**/*.png
+public/**/*.jpg
