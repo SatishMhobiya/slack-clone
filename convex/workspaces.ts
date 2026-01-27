@@ -25,7 +25,6 @@ export const create = mutation({
             joinCode
         })
 
-        console.log("ctx-console", ctx)
         await ctx.db.insert("members", {
             userId,
             workspaceId,
@@ -50,7 +49,6 @@ export const get = query({
             .collect();
 
         const workspaceIds = members.map((member) => member.workspaceId);
-        console.log("workspaceId: ", workspaceIds)
 
         const workspaces = [];
 
@@ -60,10 +58,6 @@ export const get = query({
                 workspaces.push(workspace);
             }
         }
-
-        console.log(workspaces)
-
-
         // return await ctx.db.query("workspaces").collect();
         return workspaces;
     }
