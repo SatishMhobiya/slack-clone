@@ -25,9 +25,9 @@ const WorkspaceIdLayout = ({ children }: WorkspaceIdLayoutProps) => {
                 <Sidebar />
                 <Group orientation='horizontal' defaultLayout={defaultLayout} onLayoutChanged={onLayoutChanged}>
                     <Panel
-                        defaultSize={"30%"}
-                        minSize={"20%"}
-                        className='bg-[#5E2C5F]'
+                        defaultSize={"20%"}
+                        minSize={"10%"}
+                        className='bg-[#5E2C5F] min-w-0'
                     >
                         <WorkspaceSidebar />
                     </Panel>

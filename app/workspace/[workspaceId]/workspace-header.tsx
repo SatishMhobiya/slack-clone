@@ -27,7 +27,7 @@ const WorkspaceHeader = ({ workspace, isAdmin }: WorkspaceHeaderProps) => {
                     <DropdownMenuTrigger asChild>
                         <Button
                             variant='transparent'
-                            className='font-semibold text-lg w-auto p-1.5 overflow-hidden'
+                            className='font-semibold text-lg flex-1 min-w-0 p-1.5 overflow-hidden justify-start'
                             size='sm'
                         >
                             <span className='truncate'> {workspace?.name} </span>
@@ -38,7 +38,7 @@ const WorkspaceHeader = ({ workspace, isAdmin }: WorkspaceHeaderProps) => {
                         <DropdownMenuItem
                             className='cursor-pointer capitalize'
                         >
-                            <div className='size-9 overflow-hidden relative bg-[#616061] rounded-md text-white font-semibold text-xl flex items-center justify-center'>
+                            <div className='size-9 overflow-hidden relative bg-[#616061] rounded-md text-white font-semibold text-xl flex items-center justify-center mr-2'>
                                 {workspace.name.charAt(0).toUpperCase()}
                             </div>
                             <div className='flex flex-col items-start'>
@@ -62,7 +62,6 @@ const WorkspaceHeader = ({ workspace, isAdmin }: WorkspaceHeaderProps) => {
                                     Preference
                                 </DropdownMenuItem>
                             </>}
-
                     </DropdownMenuContent>
                 </DropdownMenu>
                 <div className='flex items-center gap-0.5'>
@@ -76,7 +75,6 @@ const WorkspaceHeader = ({ workspace, isAdmin }: WorkspaceHeaderProps) => {
                             <SquarePen className='size-4' />
                         </Button>
                     </Hint>
-
                 </div>
             </div>
         </>

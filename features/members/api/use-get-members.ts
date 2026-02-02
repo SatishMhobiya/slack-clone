@@ -3,14 +3,14 @@ import { api } from '@/convex/_generated/api'
 import { Id } from '@/convex/_generated/dataModel'
 import { useQuery } from 'convex/react'
 
-interface UserCurrentMemberProps {
+interface UserGetMembers {
     workspaceId: Id<"workspaces">
 }
 
-const useCurrentMember = ({ workspaceId }: UserCurrentMemberProps) => {
-    const data = useQuery(api.members.current, { workspaceId })
+const useGetMembers = ({ workspaceId }: UserGetMembers) => {
+    const data = useQuery(api.members.get, { workspaceId })
     const isLoading = data === undefined;
     return { data, isLoading }
 }
 
-export default useCurrentMember
+export default useGetMembers
